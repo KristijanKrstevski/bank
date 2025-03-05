@@ -22,7 +22,6 @@ class _EditCardPageState extends State<EditCardPage> {
   @override
   void initState() {
     super.initState();
-    // Pre-fill the form with the current card data
     _transactionNumberController.text = widget.card.transactionNumber;
     _expirationDateController.text = widget.card.expirationDate;
     _balanceController.text = widget.card.balance.toString();
@@ -63,52 +62,63 @@ class _EditCardPageState extends State<EditCardPage> {
     }
   }
 
+  Widget _buildTextField({required String label, required TextEditingController controller, TextInputType? inputType}) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        filled: true,
+        fillColor: Colors.grey[100],
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      keyboardType: inputType,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Card")),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          TextField(
-            controller: _transactionNumberController,
-            decoration: const InputDecoration(
-              labelText: 'Transaction Number',
-              hintText: 'Enter transaction number',
+      appBar: AppBar(
+        title: const Text("Edit Card"),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Container(
+                 
+            width: 800,
+            child: Column(
+              
+              children: [
+                _buildTextField(label: 'Transaction Number', controller: _transactionNumberController),
+                const SizedBox(height: 12),
+                _buildTextField(label: 'Expiration Date (YYYY-MM-DD)', controller: _expirationDateController),
+                const SizedBox(height: 12),
+                _buildTextField(label: 'Balance', controller: _balanceController, inputType: TextInputType.number),
+                const SizedBox(height: 12),
+                _buildTextField(label: 'Bank ID', controller: _bankIdController, inputType: TextInputType.number),
+                const Spacer(),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _updateCard,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: const Text('Update Card', style: TextStyle(fontSize: 16)),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _expirationDateController,
-            decoration: const InputDecoration(
-              labelText: 'Expiration Date',
-              hintText: 'YYYY-MM-DD',
-            ),
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _balanceController,
-            decoration: const InputDecoration(
-              labelText: 'Balance',
-              hintText: 'Enter balance',
-            ),
-            keyboardType: TextInputType.number,
-          ),
-          const SizedBox(height: 12),
-          TextField(
-            controller: _bankIdController,
-            decoration: const InputDecoration(
-              labelText: 'Bank ID',
-              hintText: 'Enter bank ID',
-            ),
-            keyboardType: TextInputType.number,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _updateCard,
-            child: const Text('Update Card'),
-          ),
-        ],
+        ),
       ),
     );
   }

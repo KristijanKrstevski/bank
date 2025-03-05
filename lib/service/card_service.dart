@@ -13,7 +13,8 @@ class CardService {
     }
 
     try {
-      await _supabase.from("cards").insert({
+      await _supabase
+      .from("cards").insert({
         'user_id': userId,
         'transaction_number': newCard.transactionNumber,
         'expiration_date': newCard.expirationDate,

@@ -27,8 +27,9 @@ class TransactionService {
     await _supabase.from('transactions').insert({
       'card_id': transaction.cardId,
       'transaction_date': transaction.transactionDate.toIso8601String(),
-      'description': transaction.description,
+      
     });
+     
   }
 
   /// Get all transactions for a specific card

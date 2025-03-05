@@ -1,6 +1,8 @@
 import 'package:bank/model/user.dart';
 import 'package:bank/service/user_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -57,72 +59,77 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen height and width for dynamic adjustments
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+      resizeToAvoidBottomInset: true, // Allow resizing when the keyboard is shown
+      body: Stack(
         children: [
-          TextField(
-            controller: _emailController,
-            decoration: const InputDecoration(
-              labelText: "Email",
-              hintText: "Enter your email",
-            ),
-            keyboardType: TextInputType.emailAddress,
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _usernameController,
-            decoration: const InputDecoration(
-              labelText: "Username",
-              hintText: "Enter your username",
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF1D2671), Color(0xFFC33764)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _firstNameController,
-            decoration: const InputDecoration(
-              labelText: "First Name",
-              hintText: "Enter your first name",
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: screenHeight * 0.15, // Adjust top padding to vertically center the container
+                  bottom: screenHeight * 0.05, // Add some space for the keyboard
+                ),
+                child: Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  elevation: 5,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Create an Account",
+                          style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(controller: _emailController, decoration: const InputDecoration(labelText: "Email")),
+                        const SizedBox(height: 12),
+                        TextField(controller: _usernameController, decoration: const InputDecoration(labelText: "Username")),
+                        const SizedBox(height: 12),
+                        TextField(controller: _firstNameController, decoration: const InputDecoration(labelText: "First Name")),
+                        const SizedBox(height: 12),
+                        TextField(controller: _lastNameController, decoration: const InputDecoration(labelText: "Last Name")),
+                        const SizedBox(height: 12),
+                        TextField(controller: _genderController, decoration: const InputDecoration(labelText: "Gender")),
+                        const SizedBox(height: 12),
+                        TextField(controller: _passwordController, decoration: const InputDecoration(labelText: "Password"), obscureText: true),
+                        const SizedBox(height: 12),
+                        TextField(controller: _confirmPasswordController, decoration: const InputDecoration(labelText: "Confirm Password"), obscureText: true),
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: signUp,
+                          child: const Text("Sign Up"),
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Already have an account? Log In"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _lastNameController,
-            decoration: const InputDecoration(
-              labelText: "Last Name",
-              hintText: "Enter your last name",
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _genderController,
-            decoration: const InputDecoration(
-              labelText: "Gender",
-              hintText: "Enter your gender",
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _passwordController,
-            decoration: const InputDecoration(
-              labelText: "Password",
-              hintText: "Enter your password",
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _confirmPasswordController,
-            decoration: const InputDecoration(
-              labelText: "Confirm Password",
-              hintText: "Confirm your password",
-            ),
-            obscureText: true,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: signUp,
-            child: const Text("Sign Up"),
           ),
         ],
       ),

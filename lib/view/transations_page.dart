@@ -1,3 +1,5 @@
+import 'package:bank/widget/expence_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TransationsPage extends StatelessWidget {
@@ -5,6 +7,15 @@ class TransationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Transactions'),
+      ),
+      body: Column(
+        children: [
+          ExpenceWidget(),
+        ]
+      )
+    );
   }
 }
