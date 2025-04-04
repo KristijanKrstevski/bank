@@ -37,4 +37,13 @@ class ExpencesCategoryProvider extends ChangeNotifier {
     }
   }
 
+  
+Future<ExpensesCategory?> getCategoryById(int categoryId) async {
+  try {
+    final categories = await _expensesCategoryService.getExpensesCategory();
+    return categories.firstWhere((cat) => cat.id == categoryId);
+  } catch (e) {
+    return null;
+  }
+}
 }

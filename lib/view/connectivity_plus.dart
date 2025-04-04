@@ -18,6 +18,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 
 class NetworkHandler extends StatefulWidget {
+  const NetworkHandler({super.key});
+
   @override
   _NetworkHandlerState createState() => _NetworkHandlerState();
 }
@@ -56,12 +58,12 @@ class _NetworkHandlerState extends State<NetworkHandler> {
 
 Future<void> _fetchDataFromSupabase() async {
   try {
-    // Fetch data from Supabase directly
+
     final response = await Supabase.instance.client
         .from('your_table')
         .select();
 
-    // Check if the response contains data
+
     if (response.isEmpty) {
       print('No data found');
     } else {

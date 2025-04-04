@@ -1,4 +1,5 @@
 import 'package:bank/view/bank_map_page.dart';
+import 'package:bank/view/home_page.dart';
 import 'package:bank/view/transations_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _FooterWidgetState extends State<FooterWidget> {
       padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
       child: Stack(
         
-        clipBehavior: Clip.none, // Allows the button to overflow
+        clipBehavior: Clip.none, 
         children: [
           Align(
             alignment: Alignment.bottomCenter,
@@ -30,31 +31,43 @@ class _FooterWidgetState extends State<FooterWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 32), // Slightly move left
-                    child:  Icon(
-                    CupertinoIcons.graph_square_fill,
-                    color: Colors.black,
-                    size: 32,
-                  ),
-                
+                 Padding(
+  padding: EdgeInsets.only(right: 32),
+  child: GestureDetector(
+    onTap: () {
+  
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+        (Route<dynamic> route) => false, 
+      );
+    },
+    child: Icon(
+      CupertinoIcons.home,
+      color: Colors.black,
+      size: 32,
+    ),
+  ),
+
+
                   ),
                    Padding(
-                    padding: EdgeInsets.only(left: 32),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BankMapPage()),
-                        );
-                      },
-                      child: Icon(
-                        Icons.calendar_month,
-                        color: Colors.black,
-                        size: 32,
-                      ),
+                  padding: EdgeInsets.only(left: 32),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BankMapPage()),
+                      );
+                    },
+                    child: Image.asset(
+                      'assets/logobank.png', 
+                      width: 32,
+                      height: 32, 
                     ),
                   ),
+                ),
+
                 ],
               ),
             ),
@@ -62,7 +75,7 @@ class _FooterWidgetState extends State<FooterWidget> {
           Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
-              height: 100, // Larger than the container to overflow
+              height: 100,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => TransationsPage()));
@@ -70,7 +83,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(20),
-                  backgroundColor: Colors.blue, // Change as needed
+                  backgroundColor: Colors.blue, 
                   elevation: 8,
                 ),
                 child: const Icon(Icons.add, size: 32, color: Colors.white),

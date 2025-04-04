@@ -10,7 +10,7 @@ class TransactionsProvider with ChangeNotifier {
   List<Transaction> get transactions => _transactions;
   bool get isLoading => _isLoading;
 
-  /// Load transactions for the user's card
+
   Future<void> loadTransactions(int cardId) async {
     _isLoading = true;
     notifyListeners();
@@ -25,11 +25,11 @@ class TransactionsProvider with ChangeNotifier {
     }
   }
 
-  /// Add a new transaction
+
   Future<void> addTransaction(Transaction newTransaction) async {
     try {
       await _transactionService.addTransaction(newTransaction);
-      await loadTransactions(newTransaction.cardId); // Refresh the list
+      await loadTransactions(newTransaction.cardId); 
     } catch (e) {
       throw Exception("Failed to add transaction: $e");
     }

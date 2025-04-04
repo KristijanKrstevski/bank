@@ -17,7 +17,7 @@ class Users {
     required this.gender,
   });
 
-  // Convert a User into a Map.
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -30,7 +30,7 @@ class Users {
     };
   }
 
-  // Extract a User object from a Map.
+
   factory Users.fromMap(Map<String, dynamic> map) {
     return Users(
       id: map['id'],

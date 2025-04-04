@@ -1,18 +1,26 @@
 class ExpensesCategory {
 
-  String category_name;
-  String emoji;
- String? user_id;
- int? id;
+ final int id;
+  final String category_name;
+  final String emoji;
+  final String user_id; 
 
   ExpensesCategory({
-this.user_id,
+    required this.user_id,
     required this.category_name,
     required this.emoji,
-     this.id,
+    required this.id,
   });
 
-  // Convert an ExpensesCategory into a Map.
+  factory ExpensesCategory.fromMap(Map<String, dynamic> map) {
+    return ExpensesCategory(
+      user_id: map['category_user'].toString(), 
+      category_name: map['category_name'] as String,
+      emoji: map['emoji'] as String,
+      id: int.parse(map['category_id'].toString()), 
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
    "category_user": user_id,
@@ -22,13 +30,5 @@ this.user_id,
     };
   }
 
-  // Extract an ExpensesCategory object from a Map.
-  factory ExpensesCategory.fromMap(Map<String, dynamic> map) {
-    return ExpensesCategory(
-      user_id: map['category_user'],
-      category_name: map['category_name'],
-      emoji: map['emoji'],
-      id: map['category_id'],
-    );
-  }
+
 }

@@ -2,7 +2,6 @@ import 'package:bank/model/user.dart';
 import 'package:bank/service/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -59,12 +58,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen height and width for dynamic adjustments
+
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Allow resizing when the keyboard is shown
+      resizeToAvoidBottomInset: true, 
       body: Stack(
         children: [
           Container(
@@ -82,8 +81,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: EdgeInsets.only(
                   left: 16,
                   right: 16,
-                  top: screenHeight * 0.15, // Adjust top padding to vertically center the container
-                  bottom: screenHeight * 0.05, // Add some space for the keyboard
+                  top: screenHeight * 0.15, 
+                  bottom: screenHeight * 0.05, 
                 ),
                 child: Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

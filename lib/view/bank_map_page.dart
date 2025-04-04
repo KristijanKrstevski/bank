@@ -1,14 +1,18 @@
+import 'package:bank/widget/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+
 class BankMapPage extends StatefulWidget {
+  const BankMapPage({super.key});
+
   @override
   _BankMapPageState createState() => _BankMapPageState();
 }
 
 class _BankMapPageState extends State<BankMapPage> {
   final List<String> banks = [
-   'Капитал банка АД Скопје',
+    'Капитал банка АД Скопје',
     'Комерцијална банка АД Скопје',
     'НЛБ банка АД Скопје',
     'ПроKредит банка АД Скопје',
@@ -73,6 +77,7 @@ class _BankMapPageState extends State<BankMapPage> {
           Expanded(
             child: WebViewWidget(controller: _controller),
           ),
+          FooterWidget(), 
         ],
       ),
     );

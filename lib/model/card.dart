@@ -15,7 +15,7 @@ class Cards {
     required this.bankId,
   });
 
-  // Convert a Card into a Map.
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -27,7 +27,6 @@ class Cards {
     };
   }
 
-  // Extract a Card object from a Map.
   factory Cards.fromMap(Map<String, dynamic> map) {
     return Cards(
       id: map['id'],

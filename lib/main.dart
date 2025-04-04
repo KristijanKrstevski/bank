@@ -2,6 +2,7 @@ import 'package:bank/providers/bank_name_provider.dart';
 import 'package:bank/providers/card_provider.dart';
 import 'package:bank/providers/expences_category_provider.dart';
 import 'package:bank/providers/expenses_provider.dart';
+import 'package:bank/providers/income_provider.dart';
 import 'package:bank/providers/transactions_provider.dart';
 import 'package:bank/providers/user_provider.dart';
 import 'package:bank/service/auth_check.dart';
@@ -25,6 +26,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => TransactionsProvider()),
         ChangeNotifierProvider(create: (context) => ExpencesCategoryProvider()),
         ChangeNotifierProvider(create: (context) => ExpensesProvider()),
+        ChangeNotifierProvider(create: (_) => IncomeProvider()),
       ],
       child: const MyApp(),
     ),

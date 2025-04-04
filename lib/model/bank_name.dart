@@ -7,7 +7,7 @@ class BankName {
     required this.bankName,
   });
 
-  // Convert a BankName into a Map.
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -15,7 +15,7 @@ class BankName {
     };
   }
 
-  // Extract a BankName object from a Map.
+
   factory BankName.fromMap(Map<String, dynamic> map) {
     return BankName(
       id: map['id'],

@@ -4,7 +4,7 @@ import 'package:bank/model/card.dart';
 class CardService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  // Create a new card
+
   Future<void> addCard(Cards newCard) async {
     final userId = _supabase.auth.currentUser?.id;
 
@@ -26,7 +26,7 @@ class CardService {
     }
   }
 
-  // Read all cards for the current user
+
  Future<List<Cards>> getCards() async {
   final userId = _supabase.auth.currentUser?.id;
 
@@ -83,19 +83,4 @@ Future<void> deleteCard(Cards card) async {
     throw Exception("Failed to delete card: $e");
   }
 }
-
-  // Stream all cards for the current user
-  // Stream<List<Cards>> get cardStream {
-  //   final userId = _supabase.auth.currentUser?.id;
-
-  //   if (userId == null) {
-  //     throw Exception("User not logged in");
-  //   }
-
-  //   return _supabase
-  //       .from('cards')
-  //       .stream(primaryKey: ['id'])
-  //       .eq('user_id', userId)
-  //       .map((data) => data.map((cardMap) => Cards.fromMap(cardMap)).toList());
-  // }
 }

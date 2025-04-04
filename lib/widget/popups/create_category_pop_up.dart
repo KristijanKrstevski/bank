@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:bank/model/expenses_category.dart';
 import 'package:bank/providers/expences_category_provider.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateCategoryPopUp extends StatefulWidget {
   const CreateCategoryPopUp({super.key});
@@ -15,12 +16,12 @@ class CreateCategoryPopUp extends StatefulWidget {
 
 class _CreateCategoryPopUpState extends State<CreateCategoryPopUp> {
   final TextEditingController _categoryController = TextEditingController();
-  String _selectedEmoji = "😀"; // Default emoji
-
+  String _selectedEmoji = "😀"; 
+ final SupabaseClient _supabase = Supabase.instance.client;
   @override
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<ExpencesCategoryProvider>(context);
-
+ final userId = _supabase.auth.currentUser?.id;
     return AlertDialog(
       titlePadding: const EdgeInsets.only(top: 10, right: 10),
       title: Stack(
@@ -79,8 +80,10 @@ class _CreateCategoryPopUpState extends State<CreateCategoryPopUp> {
             if (categoryName.isEmpty) return;
 
             ExpensesCategory newCategory = ExpensesCategory(
+              user_id: userId.toString(),
               category_name: categoryName,
               emoji: _selectedEmoji,
+              id: -1,
             );
 
             await categoryProvider.addExpenceCategory(newCategory);

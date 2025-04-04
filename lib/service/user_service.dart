@@ -70,21 +70,19 @@ class UserService {
 
 
 
-
-
   Future<void> signInWithGoogle() async {
   try {
     if (foundation.kIsWeb) {
-      // 🔹 Web authentication using Supabase OAuth
+      
       await _supabase.auth.signInWithOAuth(OAuthProvider.google);
     } else {
-      // 🔹 Mobile (Android/iOS) Google Sign-In Flow
+
       final GoogleSignIn googleSignIn = GoogleSignIn(
         clientId: foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
-            ? '523302827652-dfc4nacmdl18s8nmtt7p40moi20gr4cn.apps.googleusercontent.com' // iOS Client ID
-            : null, // Android does not need clientId
+            ? '523302827652-dfc4nacmdl18s8nmtt7p40moi20gr4cn.apps.googleusercontent.com' 
+            : null, 
         serverClientId:
-            '523302827652-l9e1ul100me9ms5k6mqelf3k012gj9m4.apps.googleusercontent.com', // Web Client ID
+            '523302827652-l9e1ul100me9ms5k6mqelf3k012gj9m4.apps.googleusercontent.com', 
       );
 
       final googleUser = await googleSignIn.signIn();
@@ -101,7 +99,7 @@ class UserService {
       }
 
       await _supabase.auth.signInWithIdToken(
-        provider: OAuthProvider.google, // ✅ Fixed: Use OAuthProvider.google
+        provider: OAuthProvider.google, 
         idToken: idToken,
         accessToken: accessToken,
       );

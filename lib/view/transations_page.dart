@@ -1,6 +1,8 @@
 import 'package:bank/widget/expence_widget.dart';
+import 'package:bank/widget/footer.dart';
+import 'package:bank/widget/income_widghet.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class TransationsPage extends StatelessWidget {
   const TransationsPage({super.key});
@@ -14,8 +16,11 @@ class TransationsPage extends StatelessWidget {
       body: Column(
         children: [
           ExpenceWidget(),
-        ]
-      )
+          IncomeWidghet(),
+          Expanded(child: Container()), 
+          FooterWidget(),
+        ],
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:bank/service/card_service.dart';
 class EditCardPage extends StatefulWidget {
   final Cards card;
 
-  const EditCardPage({Key? key, required this.card}) : super(key: key);
+  const EditCardPage({super.key, required this.card});
 
   @override
   State<EditCardPage> createState() => _EditCardPageState();
@@ -88,7 +88,7 @@ class _EditCardPageState extends State<EditCardPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Container(
+          child: SizedBox(
                  
             width: 800,
             child: Column(

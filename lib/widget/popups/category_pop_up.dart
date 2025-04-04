@@ -5,7 +5,7 @@ import 'package:bank/service/expenses_category_service.dart';
 class CategoryPopUp extends StatefulWidget {
   final Function(ExpensesCategory) onCategorySelected;
 
-  const CategoryPopUp({Key? key, required this.onCategorySelected}) : super(key: key);
+  const CategoryPopUp({super.key, required this.onCategorySelected});
 
   @override
   State<CategoryPopUp> createState() => _CategoryPopUpState();
@@ -22,10 +22,6 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
   }
 
   void _loadCategories() {
-    setState(() {
-      isLoading = true;
-    });
-
     _categoriesFuture = ExpencesCategoryService().getExpensesCategory();
     
     _categoriesFuture.then((_) {
@@ -54,7 +50,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
             ),
           ),
           isLoading
-              ? const Center(child: CircularProgressIndicator()) // Show loading spinner
+              ? const Center(child: CircularProgressIndicator())
               : FutureBuilder<List<ExpensesCategory>>(
                   future: _categoriesFuture,
                   builder: (context, snapshot) {
@@ -73,7 +69,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
 
                     final categories = snapshot.data!;
                     return SizedBox(
-                      height: 300, // Set height for the list view
+                      height: 300,
                       child: ListView.builder(
                         itemCount: categories.length,
                         itemBuilder: (context, index) {

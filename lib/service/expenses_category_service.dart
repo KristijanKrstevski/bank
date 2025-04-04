@@ -15,7 +15,7 @@ final SupabaseClient _supabase = Supabase.instance.client;
 
     try {
       await _supabase.from("expenses_categories").insert({
-       "category_user": userId,
+      "category_user": userId,
       'category_name': expensesCategory.category_name,
       'emoji': expensesCategory.emoji,
       });
@@ -34,15 +34,11 @@ final SupabaseClient _supabase = Supabase.instance.client;
     try {
       final response = await _supabase
           .from("expenses_categories")
-          .select()
+          .select('category_id, category_name, emoji')
           .eq("category_user", userId);
 
       return response.map<ExpensesCategory>((data) {
-        return ExpensesCategory(
-         
-          category_name: data['category_name'],
-          emoji: data['emoji'],
-        );
+        return ExpensesCategory.fromMap(data);
       }).toList();
     } catch (e) {
       throw Exception("Failed to load expenses categories: $e");

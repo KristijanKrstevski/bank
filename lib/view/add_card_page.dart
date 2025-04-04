@@ -3,7 +3,7 @@ import 'package:bank/service/card_service.dart';
 import 'package:flutter/material.dart';
 
 class AddCardPage extends StatefulWidget {
-  const AddCardPage({Key? key}) : super(key: key);
+  const AddCardPage({super.key});
 
   @override
   State<AddCardPage> createState() => _AddCardPageState();

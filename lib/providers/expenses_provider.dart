@@ -10,7 +10,7 @@ class ExpensesProvider with ChangeNotifier {
   List<Expense> _expenses = [];
   bool _isLoading = false;
 
-  List<Expense> get categories => _expenses;
+  List<Expense> get expenses  => _expenses;
   bool get isLoading => _isLoading;
 
   Future<void> loadExpenses() async {

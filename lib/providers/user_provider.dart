@@ -11,7 +11,7 @@ class UserProvider with ChangeNotifier {
   Future<void> signIn(String email, String password) async {
     try {
       await _userService.signInWithEmailPassword(email, password);
-      // Fetch user details if needed
+
       notifyListeners();
     } catch (e) {
       throw Exception("Failed to sign in: $e");

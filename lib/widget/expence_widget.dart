@@ -1,7 +1,11 @@
+import 'package:bank/model/expense.dart';
+import 'package:bank/providers/card_provider.dart';
+import 'package:bank/providers/expenses_provider.dart';
 import 'package:bank/widget/popups/category_pop_up.dart';
 import 'package:bank/widget/popups/create_category_pop_up.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExpenceWidget extends StatefulWidget {
   const ExpenceWidget({super.key});
@@ -13,6 +17,14 @@ class ExpenceWidget extends StatefulWidget {
 class _ExpenceWidgetState extends State<ExpenceWidget> {
   String? selectedCategoryName;
   String? selectedCategoryEmoji;
+  int? selectedCategoryId;
+  final TextEditingController _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,22 @@ class _ExpenceWidgetState extends State<ExpenceWidget> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
+                Consumer<CardProvider>(
+                  builder: (context, cardProvider, _) {
+                    if (cardProvider.selectedCard == null) {
+                      return const Text('No card selected',
+                          style: TextStyle(color: Colors.white));
+                    }
+                    return Text(
+                      'Selected Card: ${cardProvider.selectedCard!.transactionNumber}',
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
                 TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -38,8 +65,6 @@ class _ExpenceWidgetState extends State<ExpenceWidget> {
                   ),
                 ),
                 const SizedBox(height: 20),
-
-                // BUTTON TO OPEN CATEGORY POPUP AS A BOTTOM SHEET
                 TextButton(
                   onPressed: () {
                     showModalBottomSheet(
@@ -51,6 +76,7 @@ class _ExpenceWidgetState extends State<ExpenceWidget> {
                             setState(() {
                               selectedCategoryName = category.category_name;
                               selectedCategoryEmoji = category.emoji;
+                              selectedCategoryId = category.id;
                             });
                           },
                         );
@@ -64,25 +90,23 @@ class _ExpenceWidgetState extends State<ExpenceWidget> {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
                 GestureDetector(
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CreateCategoryPopUp(),
+                      builder: (context) => const CreateCategoryPopUp(),
                     );
                   },
                   child: DottedBorder(
                     color: Colors.blue,
                     strokeWidth: 2,
-                    dashPattern: [6, 4],
+                    dashPattern: const [6, 4],
                     borderType: BorderType.RRect,
                     radius: const Radius.circular(16),
-                    child: SizedBox(
+                    child: const SizedBox(
                       height: 70,
-                      child: const Center(
+                      child: Center(
                         child: Icon(
                           Icons.add,
                           size: 40,
@@ -92,10 +116,58 @@ class _ExpenceWidgetState extends State<ExpenceWidget> {
                     ),
                   ),
                 ),
-
                 TextButton(
-                  onPressed: () {
-                    // Add your save logic here
+                  onPressed: () async {
+                    final amount = int.tryParse(_amountController.text);
+                    final cardProvider = Provider.of<CardProvider>(context, listen: false);
+                    
+                    if (amount == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please enter a valid amount')),
+                      );
+                      return;
+                    }
+                    
+                    if (selectedCategoryId == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please select a category')),
+                      );
+                      return;
+                    }
+                    
+                    if (cardProvider.selectedCard == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please select a card from the drawer')),
+                      );
+                      return;
+                    }
+
+                    try {
+                      final provider = Provider.of<ExpensesProvider>(context, listen: false);
+                      await provider.addExpence(
+                        Expense(
+                          transactionId: cardProvider.selectedCard!.id!,
+                          amount: amount,
+                          categoryId: selectedCategoryId!,
+                        ),
+                      );
+                      await cardProvider.loadCards();
+      await provider.loadExpenses();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Expense saved successfully')),
+                      );
+                      
+                      _amountController.clear();
+                      setState(() {
+                        selectedCategoryName = null;
+                        selectedCategoryEmoji = null;
+                        selectedCategoryId = null;
+                      });
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error saving expense: $e')),
+                      );
+                    }
                   },
                   child: const Text('SAVE'),
                 ),
